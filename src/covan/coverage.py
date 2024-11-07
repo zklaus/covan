@@ -12,7 +12,7 @@ class Spec(NamedTuple):
     lines: set[int] | None
 
     @classmethod
-    def _parse_spec(cls, spec: str | None):
+    def parse_spec(cls, spec: str | None):
         if ":" in spec:
             lines = set()
             path, line_specs = spec.split(":")

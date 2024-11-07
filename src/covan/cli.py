@@ -12,15 +12,14 @@ app = typer.Typer()
 @app.command()
 def find_tests(
     specs: Annotated[list[str], typer.Argument()],
+    output_file: Annotated[Path, typer.Option("--output-file", "-o")],
     coverage_file: Annotated[Path, typer.Option("--coverage-file", "-c")] = ".coverage",
 ):
-    parsed_specs = [Spec._parse_spec(spec) for spec in specs]
-    print(parsed_specs)
+    parsed_specs = [Spec.parse_spec(spec) for spec in specs]
     cov = Coverage(coverage_file)
     contexts = cov.contexts_for_specs(parsed_specs)
     df = cov.parse_contexts(contexts)
-    print(df)
-    # cov.print_contexts(contexts)
+    df.to_feather(output_file)
 
 
 if __name__ == "__main__":
