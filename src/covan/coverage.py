@@ -8,6 +8,7 @@ import pandas as pd
 class Coverage:
 
     TEST_ID_REGEX = re.compile(r"(?P<filename>[^:]*)::(?:(?P<class>[^:]*)::)?(?P<id>[^[]*)(?:\[(?P<params>.*)\])?\|(?P<phase>.*)")
+    EMPTY_CONTEXT = {''}
 
     def __init__(self, filename):
         self.data = CoverageData(filename)
@@ -26,8 +27,7 @@ class Coverage:
         for file in files:
             for lineno, ctxs in self.data.contexts_by_lineno(file).items():
                 if lines is None or lineno in lines:
-                    contexts |= set(ctxs)
-        contexts.remove('')
+                    contexts |= set(ctxs) - self.EMPTY_CONTEXT
         return contexts
 
     def parse_contexts(self, contexts):
