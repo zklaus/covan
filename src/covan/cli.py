@@ -9,7 +9,7 @@ app = typer.Typer()
 @app.command()
 def find_tests(coverage_file: str):
     cov = Coverage(coverage_file)
-    contexts = cov.contexts_for_lines("solve.py", lines=[3])
+    contexts = cov.contexts_for_lines("**/solve.py", lines=[3])
     df = cov.parse_contexts(contexts)
     print(df)
     cov.print_contexts(contexts)

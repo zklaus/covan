@@ -1,3 +1,4 @@
+import fnmatch
 import re
 
 from coverage import CoverageData
@@ -20,8 +21,7 @@ class Coverage:
         return match.groups()
 
     def contexts_for_lines(self, path, lines=None):
-        files = {f for f in self.data.measured_files() if f.endswith(path)}
-        breakpoint()
+        files = {f for f in self.data.measured_files() if fnmatch.fnmatch(f, path)}
         contexts = set()
         for file in files:
             for lineno, ctxs in self.data.contexts_by_lineno(file).items():
