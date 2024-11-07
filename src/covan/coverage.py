@@ -21,7 +21,12 @@ class Coverage:
 
     def contexts_for_lines(self, path, lines=None):
         files = {f for f in self.data.measured_files() if f.endswith(path)}
-        contexts = set().union(*[set().union(*ctxs) for ctxs in [self.data.contexts_by_lineno(file).values() for file in files]])
+        breakpoint()
+        contexts = set()
+        for file in files:
+            for lineno, ctxs in self.data.contexts_by_lineno(file).items():
+                if lines is None or lineno in lines:
+                    contexts |= set(ctxs)
         contexts.remove('')
         return contexts
 
