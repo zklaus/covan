@@ -77,10 +77,10 @@ class Coverage:
 
     def parse_contexts(self, contexts):
         df = pd.DataFrame.from_records(
-            map(self.parse_test_id, contexts), columns=["file", "class", "id", "params", "phase"]
+            map(self.parse_test_id, contexts), columns=["file", "class", "function", "params", "phase"]
         )
         tests = (
-            df.groupby(["file", "class", "id"], dropna=False).agg(lambda x: ", ".join([str(e) for e in x])).sort_index()
+            df.groupby(["file", "class", "function"], dropna=False).agg(lambda x: ", ".join([str(e) for e in x])).sort_index()
         )
         return tests
 
