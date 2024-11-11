@@ -29,7 +29,11 @@ def format_contexts(contexts_file: Annotated[Path, typer.Argument()]):
     INDENTATION = " " * 2
     df = pd.read_feather(contexts_file)
     indentation_level = 0
-    for file, fdf in df.groupby(level=0):
+    file_groups = df.groupby(level=0)
+    no_tests = len(df)
+    no_files = len(file_groups)
+    print(f"Found a total of {no_tests} tests across {no_files} source files.")
+    for file, fdf in file_groups:
         indentation_level = 0
         print(f"{INDENTATION * indentation_level}### `{file}` (total number of test functions: {len(fdf)})\n<details>\n")
         for clazz, cdf in fdf.droplevel(0).groupby(level=0, dropna=False):
