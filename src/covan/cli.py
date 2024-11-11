@@ -31,16 +31,17 @@ def format_contexts(contexts_file: Annotated[Path, typer.Argument()]):
     indentation_level = 0
     for file, fdf in df.groupby(level=0):
         indentation_level = 0
-        print(f"{INDENTATION * indentation_level}- [ ] {file}")
+        print(f"{INDENTATION * indentation_level}### `{file}` (total number of test functions: {len(fdf)})\n<details>\n")
         for clazz, cdf in fdf.droplevel(0).groupby(level=0, dropna=False):
-            indentation_level = 1
+            indentation_level = 0
             if isinstance(clazz, float) and math.isnan(clazz):
                 pass
             else:
-                print(f"{INDENTATION * indentation_level}- [ ] {clazz}")
-                indentation_level = 2
+                print(f"{INDENTATION * indentation_level}- [ ] `{clazz}`")
+                indentation_level = 1
             for function in cdf.droplevel(0).index:
-                print(f"{INDENTATION * indentation_level}- [ ] {function}")
+                print(f"{INDENTATION * indentation_level}- [ ] `{function}`")
+        print("</details>\n")
 
 
 if __name__ == "__main__":
