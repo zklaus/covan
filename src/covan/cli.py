@@ -35,7 +35,7 @@ def format_contexts(contexts_file: Annotated[Path, typer.Argument()]):
     print(f"Found a total of {no_tests} tests across {no_files} source files.")
     for file, fdf in file_groups:
         indentation_level = 0
-        print(f"{INDENTATION * indentation_level}### `{file}` (total number of test functions: {len(fdf)})\n<details>\n")
+        print(f"<details>\n<summary><h3><code>{file}</code> (total number of test functions: {len(fdf)})</h3></summary>\n")
         for clazz, cdf in fdf.droplevel(0).groupby(level=0, dropna=False):
             indentation_level = 0
             if isinstance(clazz, float) and math.isnan(clazz):
@@ -45,7 +45,7 @@ def format_contexts(contexts_file: Annotated[Path, typer.Argument()]):
                 indentation_level = 1
             for function in cdf.droplevel(0).index:
                 print(f"{INDENTATION * indentation_level}- [ ] `{function}`")
-        print("</details>\n")
+        print("</details>")
 
 
 if __name__ == "__main__":
