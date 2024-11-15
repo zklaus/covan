@@ -12,7 +12,7 @@ app = typer.Typer()
 
 
 @app.command()
-def find_tests(
+def find_contexts(
     specs: Annotated[list[str], typer.Argument()],
     output_file: Annotated[Path, typer.Option("--output-file", "-o")],
     coverage_file: Annotated[Path, typer.Option("--coverage-file", "-c")] = ".coverage",
