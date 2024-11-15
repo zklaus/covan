@@ -164,8 +164,10 @@ cython_debug/
 # ipy notebooks
 *.ipynb
 
-# Feather files
+# Data files
 *.feather
+*.coverage
+test-results-*.md
 
 # pixi environments
 .pixi
